@@ -165,7 +165,17 @@ if [ -f ./submit_env.sh ]; then
     # with the old TW with the old jobwrapper.
     # once the new TW with the new jobwrapper is deployed, we can remove this
     # if/else and keep only the code inside the "if" clause.
-    . ./submit_env.sh && save_env && setup_local_env
+    . ./submit_env.sh 
+
+    # (dario, 202303)
+    # eventually, only save_startup_env will be necessary
+    # keeping save_env here for backward compatibility
+    set -x
+    save_startup_env 
+    save_env 
+    set +x
+
+    setup_local_env
 else
     # this code in the "else" clause can be discarded after we merge the new
     # TW with the new jobwrapper.
